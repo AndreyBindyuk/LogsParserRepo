@@ -21,8 +21,8 @@ public class FileController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/directories", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List getDirectoriesAndFolders(@RequestBody ServerInfo serverInfo) throws IOException {
-        return fileService.getDirectoriesAndFiles(serverInfo);
+    @RequestMapping(value = "/directories", method = RequestMethod.GET,params = "serverName",headers = "Accept=application/json")
+    public List getDirectoriesAndFolders(@RequestParam(value = "serverName") String serverName) throws IOException {
+        return fileService.getDirectoriesAndFiles(serverName);
     }
 }
