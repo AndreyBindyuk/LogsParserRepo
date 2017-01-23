@@ -8,6 +8,7 @@ import services.FileService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class FileController {
@@ -24,5 +25,11 @@ public class FileController {
     @RequestMapping(value = "/directories", method = RequestMethod.GET,params = "serverName",headers = "Accept=application/json")
     public List getDirectoriesAndFolders(@RequestParam(value = "serverName") String serverName) throws IOException {
         return fileService.getDirectoriesAndFiles(serverName);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/serverNames", method = RequestMethod.GET,headers = "Accept=application/json")
+    public Set getServerNames() throws IOException {
+        return fileService.getServerNames();
     }
 }

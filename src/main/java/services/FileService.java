@@ -7,9 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class FileService {
@@ -24,12 +22,12 @@ public class FileService {
         return new String(data);
     }
 
-    public List getDirectoriesAndFiles(ServerInfo serverInfo){
+    public List getDirectoriesAndFiles(String serverName){
         List<String> list = new ArrayList<>();
-        try(Stream<Path> paths = Files.walk(Paths.get(getlogsPathByServerName(serverInfo.getServerName())))) {
+        try(Stream<Path> paths = Files.walk(Paths.get(getlogsPathByServerName(serverName)))) {
             paths.forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
-                    list.add(String.valueOf(filePath.toAbsolutePath()).substring(getlogsPathByServerName(serverInfo.getServerName()).length()));
+                    list.add(String.valueOf(filePath.toAbsolutePath()).substring(getlogsPathByServerName(serverName).length()));
                 }
             });
         } catch (IOException e) {
@@ -50,5 +48,14 @@ public class FileService {
             e.printStackTrace();
         }
         return value;
+    }
+
+
+    public Set getServerNames() throws IOException {
+        String resourceName = "config.properties";
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        Properties props = new Properties();
+        props.load(loader.getResourceAsStream(resourceName));
+        return props.keySet();
     }
 }
