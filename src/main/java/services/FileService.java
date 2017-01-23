@@ -29,9 +29,7 @@ public class FileService {
         try(Stream<Path> paths = Files.walk(Paths.get(getlogsPathByServerName(serverInfo.getServerName())))) {
             paths.forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
-                    list.add("file: " + filePath);
-                }else {
-                    list.add("directory: " + filePath);
+                    list.add(String.valueOf(filePath.toAbsolutePath()).substring(getlogsPathByServerName(serverInfo.getServerName()).length()));
                 }
             });
         } catch (IOException e) {
