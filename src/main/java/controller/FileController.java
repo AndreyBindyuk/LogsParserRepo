@@ -2,7 +2,6 @@ package controller;
 
 import entities.FileInfo;
 import entities.ServerInfo;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import services.FileService;
 

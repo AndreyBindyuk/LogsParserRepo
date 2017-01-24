@@ -11,11 +11,12 @@
     <name>SpringRestfulWebServicesCRUDExample Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -50,6 +51,11 @@
             <groupId>sax</groupId>
             <artifactId>sax</artifactId>
             <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.53</version>
         </dependency>
     </dependencies>
     <build>
