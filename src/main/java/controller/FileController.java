@@ -31,4 +31,10 @@ public class FileController {
     public Set getServerNames() throws IOException {
         return fileService.getServerNames();
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/nieaiLogs", method = RequestMethod.GET,params = {"logPath","trackingId"},headers = "Accept=application/json")
+    public List getNieaiResponseByTrackingId(@RequestParam(value = "logPath") String logPath,@RequestParam(value = "trackingId") String trackingId) throws IOException {
+        return fileService.getNieaiResponseByTrackingId(logPath,trackingId);
+    }
 }
