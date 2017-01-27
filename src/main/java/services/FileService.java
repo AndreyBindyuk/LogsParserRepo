@@ -12,15 +12,15 @@ import java.util.stream.Stream;
 
 public class FileService {
 
-    public String getFile(FileInfo fileInfo) throws IOException {
-        File fullFileInfo = new File(fileInfo.getDomainName() + "\\" + fileInfo.getProjectName() +"\\"+ fileInfo.getLogType());
-
-        FileInputStream fis = new FileInputStream(fullFileInfo);
-        byte[] data = new byte[(int) fullFileInfo.length()];
-        fis.read(data);
-        fis.close();
-        return new String(data);
-    }
+//    public String getFile(FileInfo fileInfo) throws IOException {
+////        File fullFileInfo = new File(fileInfo.getDomainName() + "\\" + fileInfo.getProjectName() +"\\"+ fileInfo.getLogType());
+//
+//        FileInputStream fis = new FileInputStream(fullFileInfo);
+//        byte[] data = new byte[(int) fullFileInfo.length()];
+//        fis.read(data);
+//        fis.close();
+//        return new String(data);
+//    }
 
     public List getDirectoriesAndFiles(String serverName){
         List<String> list = new ArrayList<>();
@@ -60,13 +60,17 @@ public class FileService {
     }
 
 
-    public List<String> getNieaiResponseByTrackingId(String path, String trackingId){
-        File file = new File(path);
-        return getNieaiResponseByTrackingId(convertDocumentToString(file),trackingId);
+    public List<String> getNieaiResponseByTrackingId(String serverName,String path, String trackingId) throws IOException {
+        String resourceName = "config.properties";
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        Properties props = new Properties();
+        props.load(loader.getResourceAsStream(resourceName));
+        File file = new File(props.getProperty(serverName)+path);
+        return getNieaiResponseByTrackingId(convertEachLineToString(file),trackingId);
     }
 
 
-    private List<String> convertDocumentToString(File file){
+    private List<String> convertEachLineToString(File file){
         List<String> nieai = new ArrayList<>();
         List<String> common = new ArrayList<>();
         StringBuilder listString = new StringBuilder();

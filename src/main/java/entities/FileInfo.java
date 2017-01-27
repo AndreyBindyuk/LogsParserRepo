@@ -1,39 +1,39 @@
 package entities;
 
 public class FileInfo {
-    private String domainName;
-    private String projectName;
-    private String logType;
+    private String serverName;
+    private String logPath;
+    private String trackingId;
 
     public FileInfo(){}
 
-    public FileInfo(String domainName, String projectName, String logType) {
-        this.domainName = domainName;
-        this.projectName = projectName;
-        this.logType = logType;
+    public FileInfo(String serverName, String logPath, String trackingId) {
+        this.serverName = serverName;
+        this.logPath = logPath;
+        this.trackingId = trackingId;
     }
 
-    public String getDomainName() {
-        return domainName;
+    public String getServerName() {
+        return serverName;
     }
 
-    public void setDomainName(String domainName) {
-        this.domainName = domainName;
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getLogPath() {
+        return logPath;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setLogPath(String logPath) {
+        this.logPath = logPath;
     }
 
-    public String getLogType() {
-        return logType;
+    public String getTrackingId() {
+        return trackingId;
     }
 
-    public void setLogType(String logType) {
-        this.logType = logType;
+    public void setTrackingId(String trackingId) {
+        this.trackingId = trackingId;
     }
 }
