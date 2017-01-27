@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 
 public class FileService {
 
+    private String resourceName = "config.properties";
+
 //    public String getFile(FileInfo fileInfo) throws IOException {
 ////        File fullFileInfo = new File(fileInfo.getDomainName() + "\\" + fileInfo.getProjectName() +"\\"+ fileInfo.getLogType());
 //
@@ -38,7 +40,6 @@ public class FileService {
 
     private String getlogsPathByServerName(String serverName){
         String value = "";
-        String resourceName = "config.properties";
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         try(InputStream resourceStream = loader.getResourceAsStream(resourceName)) {
@@ -52,7 +53,6 @@ public class FileService {
 
 
     public Set getServerNames() throws IOException {
-        String resourceName = "config.properties";
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         props.load(loader.getResourceAsStream(resourceName));
@@ -61,7 +61,6 @@ public class FileService {
 
 
     public List<String> getNieaiResponseByTrackingId(String serverName,String path, String trackingId) throws IOException {
-        String resourceName = "config.properties";
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
         props.load(loader.getResourceAsStream(resourceName));
@@ -90,7 +89,7 @@ public class FileService {
                         if(!s.equals("    </body>")){
                             listString.append(s);
                         }else {
-                            nieai.add(String.valueOf(startNieai+listString+endNieai).replaceAll("\\s",""));
+                            nieai.add(String.valueOf(startNieai+listString+"</body>"+endNieai).replaceAll("\\s",""));
                         }
                     }
                     common.clear();
