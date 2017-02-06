@@ -6,6 +6,8 @@ import exeption.SFTPURIExceplion;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -23,12 +25,20 @@ public class SFTPConnector {
         properties.put("StrictHostKeyChecking", "no");
     }
 
-    public String get(String connectionURL, String path) throws SftpException, SFTPURIExceplion, JSchException, IOException {
-        SFTPConnector sftpConnector = new SFTPConnector();
+    public List <String> getTreeFileList(String rootPath) throws JSchException {
+        Channel channel = session.openChannel("sftp");
+        channel.connect();
+        return getTreeList(rootPath, channel);
+    }
 
-        sftpConnector.open(connectionURL);
 
-        BufferedInputStream in = sftpConnector.getFileContent(path);
+    public String getContent(String path) throws SftpException, SFTPURIExceplion, JSchException, IOException {
+        return getFileContent(path);
+    }
+
+    private String getFileContent(String path) throws SftpException, SFTPURIExceplion, JSchException, IOException {
+
+        BufferedInputStream in = getBufferedContent(path);
         byte[] contents = new byte[1024];
 
         int bytesRead = 0;
@@ -36,8 +46,6 @@ public class SFTPConnector {
         while((bytesRead = in.read(contents)) != -1) {
             strFileContents += new String(contents, 0, bytesRead);
         }
-
-        sftpConnector.close();
         return  strFileContents;
     }
 
@@ -53,7 +61,7 @@ public class SFTPConnector {
         session = getSession(user, password, host);
     }
 
-    public BufferedInputStream getFileContent(String path) throws SFTPURIExceplion, JSchException, SftpException, IOException {
+    private BufferedInputStream getBufferedContent(String path) throws SFTPURIExceplion, JSchException, SftpException, IOException {
             String fileName = getFilename(path);
             ChannelSftp channelSftp = getSFTPChannel(session, path);
             return new BufferedInputStream(channelSftp.get(fileName));
@@ -109,4 +117,29 @@ public class SFTPConnector {
 
         return channelSftp;
     }
+
+    private List<String> getTreeList(String path, Channel channel){
+        List<String> treeFileList = new ArrayList<>();
+        try {
+            ChannelSftp sftp = (ChannelSftp) channel;
+            java.util.Vector<ChannelSftp.LsEntry> flLst = sftp.ls(path);
+
+            for(int i = 0; i<flLst.size() ;i++){
+                ChannelSftp.LsEntry entry = flLst.get(i);
+                SftpATTRS attr = entry.getAttrs();
+                if(!attr.isDir()){
+                    treeFileList.add(path + "/" + entry.getFilename());
+                }
+
+                if(attr.isDir() && !entry.getFilename().equals("..") && !entry.getFilename().equals(".")){
+                    treeFileList.addAll(getTreeList(path+"/"+entry.getFilename(),channel));
+                }
+            }
+
+        } catch (SftpException e) {
+            return treeFileList;
+        }
+        return treeFileList;
+    }
+
 }
