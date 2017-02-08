@@ -36,6 +36,22 @@ public class SFTPConnector {
         return getFileContent(path);
     }
 
+    public void open(String connectionURL) throws SFTPURIExceplion, JSchException, SftpException, IOException {
+
+        if (!validateURL(connectionURL)){
+            throw new SFTPURIExceplion("Incorrect Connection URL");
+        }
+
+        String host = getHost(connectionURL);
+        String user = getUser(connectionURL);
+        String password = getPassword(connectionURL);
+        session = getSession(user, password, host);
+    }
+
+    public void close(){
+        session.disconnect();
+    }
+
     private String getFileContent(String path) throws SftpException, SFTPURIExceplion, JSchException, IOException {
 
         BufferedInputStream in = getBufferedContent(path);
@@ -49,17 +65,7 @@ public class SFTPConnector {
         return  strFileContents;
     }
 
-    public void open(String connectionURL) throws SFTPURIExceplion, JSchException, SftpException, IOException {
 
-        if (!validateURL(connectionURL)){
-            throw new SFTPURIExceplion("Incorrect Connection URL");
-        }
-
-        String host = getHost(connectionURL);
-        String user = getUser(connectionURL);
-        String password = getPassword(connectionURL);
-        session = getSession(user, password, host);
-    }
 
     private BufferedInputStream getBufferedContent(String path) throws SFTPURIExceplion, JSchException, SftpException, IOException {
             String fileName = getFilename(path);
@@ -68,35 +74,31 @@ public class SFTPConnector {
 
     }
 
-    public void close(){
-        session.disconnect();
-    }
-
-    public boolean validateURL(String connectionURL){
+    private boolean validateURL(String connectionURL){
         return connectionURL.matches(URL_RATTERN);
     }
 
-    public String getHost(String connectionURL){
+    private String getHost(String connectionURL){
         return connectionURL.substring(connectionURL.lastIndexOf('@')+1, connectionURL.length());
     }
 
-    public String getUser(String connectionURL){
+    private String getUser(String connectionURL){
         return connectionURL.substring(connectionURL.lastIndexOf('/')+1, connectionURL.lastIndexOf(':'));
     }
 
-    public String getPassword(String connectionURL){
+    private String getPassword(String connectionURL){
         return connectionURL.substring(connectionURL.lastIndexOf(':')+1, connectionURL.lastIndexOf('@'));
     }
 
-    public String getFilename(String path){
+    private String getFilename(String path){
         return path.substring(path.lastIndexOf('/')+1, path.length());
     }
 
-    public String getAbsolutePath(String path){
+    private String getAbsolutePath(String path){
         return path.substring(0,path.lastIndexOf('/')+1);
     }
 
-    public Session getSession(String user, String password, String host) throws JSchException {
+    private Session getSession(String user, String password, String host) throws JSchException {
         Session session = null;
         jsch = new JSch();
         session = jsch.getSession(user,host,22);
@@ -107,7 +109,7 @@ public class SFTPConnector {
     }
 
 
-    public ChannelSftp getSFTPChannel(Session session, String path) throws JSchException, SftpException {
+    private ChannelSftp getSFTPChannel(Session session, String path) throws JSchException, SftpException {
         Channel channel = null;
         ChannelSftp channelSftp = null;
         channel = session.openChannel("sftp");
