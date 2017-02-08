@@ -16,6 +16,9 @@ import java.util.Properties;
 public class SFTPConnector {
 
     private final String URL_RATTERN = "sftp:\\/\\/.*\\:.*\\@.*";
+    private final String CURRENT_FOLDER = ".";
+    private final String PARENT_FOLDER = "..";
+    private final String FOLDER_DETERMITATOR = "/";
     private Properties properties;
     private JSch jsch;
     private Session session;
@@ -130,11 +133,11 @@ public class SFTPConnector {
                 ChannelSftp.LsEntry entry = flLst.get(i);
                 SftpATTRS attr = entry.getAttrs();
                 if(!attr.isDir()){
-                    treeFileList.add(path + "/" + entry.getFilename());
+                    treeFileList.add(path + FOLDER_DETERMITATOR + entry.getFilename());
                 }
 
-                if(attr.isDir() && !entry.getFilename().equals("..") && !entry.getFilename().equals(".")){
-                    treeFileList.addAll(getTreeList(path+"/"+entry.getFilename(),channel));
+                if(attr.isDir() && !entry.getFilename().equals(PARENT_FOLDER) && !entry.getFilename().equals(CURRENT_FOLDER)){
+                    treeFileList.addAll(getTreeList(path+FOLDER_DETERMITATOR+entry.getFilename(),channel));
                 }
             }
 
