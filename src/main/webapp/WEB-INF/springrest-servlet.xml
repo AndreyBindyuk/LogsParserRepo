@@ -7,6 +7,6 @@
 
  <mvc:annotation-driven/>
 <context:component-scan base-package="controller" />
-
+    <mvc:default-servlet-handler/>
 </beans>
 

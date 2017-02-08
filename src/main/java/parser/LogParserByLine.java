@@ -48,7 +48,8 @@ public class LogParserByLine {
                             if (!Objects.equals(s, common.get(common.size() - 1))) {
                                 listString.append(s);
                             } else {
-                                nieai.add(String.valueOf(listString + "</MsgData>" + endNtag).replaceAll("\\s", ""));
+                                listString.append(common.get(common.size() - 1));
+                                nieai.add(String.valueOf(listString + endNtag).replaceAll("\\s", ""));
                             }
                         }
                     }
