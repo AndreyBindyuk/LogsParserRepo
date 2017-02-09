@@ -26,7 +26,7 @@ export class LogsDataComponent {
   fileTree;
   currentServers: String;
   currentPath: String;
-  currentFlowId: String;
+  currentTrackingId: String;
   messageType = 'All';
   logResultList: LogResult[] = [];
 
@@ -54,20 +54,20 @@ export class LogsDataComponent {
   getLoggedMessagesList(form) {
     this.logResultList = [];
     this.isLoading = true;
-    this.currentFlowId = form.flowId;
+    this.currentTrackingId = form.flowId;
     if (this.currentPath.includes('.')) {
-      this._restService.getLogsFromFileByFlowId(this.currentServers, this.currentPath, this.currentFlowId)
-        .subscribe(result => {
-          console.log('result1', result);
-          this.logResultList = this._parser.prettyXml(result);
-          this.isLoading = false;
-        });
-    } else {
-      this._restService.getLogsForBankByFlowId(this.currentServers, this.currentPath, this.currentFlowId)
+      this._restService.getLogsFromFileByTrackingId(this.currentServers, this.currentPath, this.currentTrackingId)
         .subscribe(result => {
           this.logResultList = this.parseResult(result);
           this.isLoading = false;
-          console.log('Log Result List', this.logResultList);
+          console.log('1 Log Result List', this.logResultList);
+        });
+    } else {
+      this._restService.getLogsForBankByTrackingId(this.currentServers, this.currentPath, this.currentTrackingId)
+        .subscribe(result => {
+          this.logResultList = this.parseResult(result);
+          this.isLoading = false;
+          console.log('2 Log Result List', this.logResultList);
         });
     }
   }
