@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+input .ng-touched.ng-invalid {
+  border: 1px solid red;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.posts li {
+  cursor: pointer;
+}
+
+.posts li:hover {
+  background: #ecf0f1;
+}
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+  background-color: #ecf0f1;
+  border-color: #ecf0f1;
+  color: #2c3e50;
+}
+
+.accordion-header{
+  background-color: lightblue;
+}
+

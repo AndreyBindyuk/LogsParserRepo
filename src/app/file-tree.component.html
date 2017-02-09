@@ -1,0 +1,13 @@
+<accordion-group #group *ngFor="let item of tree" [panelClass]="'panel panel-default'">
+  <div accordion-heading>
+    {{item.name}}
+    <a href="#flowId" *ngIf="_banks.includes(item.name)" (click)=onClick($event,item)>>></a>
+    <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+  </div>
+  <ul *ngIf="item.children && item.children[0].name.includes('.')">
+    <li *ngFor="let child of item.children" (click)="onClick($event,child)"><a href="#flowId">{{child.name}}</a></li>
+  </ul>
+  <accordion *ngIf="item.children && !item.children[0].name.includes('.')">
+    <file-tree [tree]="item.children" (select)="onChildClick($event)"></file-tree>
+  </accordion>
+</accordion-group>
