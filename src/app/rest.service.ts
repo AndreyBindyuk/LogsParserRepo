@@ -21,22 +21,20 @@ export class RestService {
     return this._http.get(this._url + 'directories?serverName=' + serverIp).map(result => result.json());
   }
 
-  getLogsForBankByFlowId(serverIp: String, bankPath: String, flowId: String) {
+  getLogsForBankByTrackingId(serverIp: String, bankPath: String, trackingId: String) {
     return this._http.get(this._url +
-      'nieaiLogsByFolder?serverName=' + serverIp +
-      '&serverPath=' + bankPath +
-      '&trackindId=' + flowId)
+      'bankLogs?serverName=' + serverIp +
+      '&bankPath=' + bankPath +
+      '&trackingId=' + trackingId)
       .map(result => result.json());
   }
 
-  getLogsFromFileByFlowId(serverIp: String, filePath: String, flowId: String) {
-    let body = {
-      serverName: serverIp,
-      logPath: filePath,
-      trackingId: flowId
-    };
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    return this._http.post(this._url + 'nieaiLogs', JSON.stringify(body), new RequestOptions({ headers: headers })).map(result => result.json());
+  getLogsFromFileByTrackingId(serverIp: String, filePath: String, trackingId: String) {
+    return this._http.get(this._url +
+      'bankComponentLogs?serverName=' + serverIp +
+      '&filePath=' + filePath +
+      '&trackingId=' + trackingId)
+      .map(result => result.json());
   }
 
 }
