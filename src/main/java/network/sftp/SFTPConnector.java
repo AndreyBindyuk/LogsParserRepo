@@ -28,6 +28,14 @@ public class SFTPConnector {
         properties.put("StrictHostKeyChecking", "no");
     }
 
+    /*
+        SFTPConnector sftpConnector = new SFTPConnector();
+        sftpConnector.open("sftp://root:root@localhost");
+        List<String> list = sftpConnector.getTreeFileList("/test");
+        System.out.println(sftpConnector.getFileContent(list.get(1)));
+        sftpConnector.close();
+    */
+
     public List <String> getTreeFileList(String rootPath) throws JSchException {
         Channel channel = session.openChannel("sftp");
         channel.connect();
@@ -35,8 +43,8 @@ public class SFTPConnector {
     }
 
 
-    public String getContent(String path) throws SftpException, SFTPURIExceplion, JSchException, IOException {
-        return getFileContent(path);
+    public String getContent(String fileFullPath) throws SftpException, SFTPURIExceplion, JSchException, IOException {
+        return getFileContent(fileFullPath);
     }
 
     public void open(String connectionURL) throws SFTPURIExceplion, JSchException, SftpException, IOException {
@@ -44,11 +52,7 @@ public class SFTPConnector {
         if (!validateURL(connectionURL)){
             throw new SFTPURIExceplion("Incorrect Connection URL");
         }
-
-        String host = getHost(connectionURL);
-        String user = getUser(connectionURL);
-        String password = getPassword(connectionURL);
-        session = getSession(user, password, host);
+        session = getSession(getUser(connectionURL), getPassword(connectionURL), getHost(connectionURL));
     }
 
     public void close(){
@@ -71,9 +75,7 @@ public class SFTPConnector {
 
 
     private BufferedInputStream getBufferedContent(String path) throws SFTPURIExceplion, JSchException, SftpException, IOException {
-            String fileName = getFilename(path);
-            ChannelSftp channelSftp = getSFTPChannel(session, path);
-            return new BufferedInputStream(channelSftp.get(fileName));
+            return new BufferedInputStream(getSFTPChannel(session, path).get(getFilename(path)));
 
     }
 
@@ -146,5 +148,6 @@ public class SFTPConnector {
         }
         return treeFileList;
     }
+
 
 }
