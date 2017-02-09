@@ -18,15 +18,17 @@
     </div>
   </form>
   <spinner [visible]="isLoading"></spinner>
-  <div *ngIf="currentFlowId && logResultList" class="form-group">
+  <div *ngIf="currentTrackingId && logResultList" class="form-group">
     <accordion>
       <accordion-group #group *ngFor="let logResult of logResultList">
         <div accordion-heading>
           {{logResult.fileName}}
           <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
         </div>
+        <div *ngIf="logResult.messages.length==0">
+          no log messages with current tracking id
+        </div>
         <pre *ngFor="let message of logResult.messages" class="language-markup"><code class="language-markup" [innerHTML]="message"></code></pre>
-        <!--<handy-syntax-highlighter *ngFor="let message of logResult.messages" [language]="'markup'" [content]="message"></handy-syntax-highlighter>-->
       </accordion-group>
     </accordion>
   </div>
