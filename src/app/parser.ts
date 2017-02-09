@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 declare var vkbeautify: any;
+declare var Prism: any;
 
 @Injectable()
 export class Parser {
@@ -12,7 +13,7 @@ export class Parser {
         plainMessageList.push(message.trim());
       });
     });
-    return plainMessageList.map(message => vkbeautify.xml(message));
+    return plainMessageList.map(message => Prism.highlight(vkbeautify.xml(message, '   '), Prism.languages['markup']));
   }
 
   parseFileTree(filesPath: String[]) {

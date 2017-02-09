@@ -9,14 +9,12 @@ import { FileTreeComponent } from './file-tree.component';
 import { SpinnerComponent } from './spinner.component';
 import { RestService } from './rest.service';
 import { Parser } from './parser';
-import { Ng2HandySyntaxHighlighterModule } from 'ng2-handy-syntax-highlighter';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
-    Ng2HandySyntaxHighlighterModule,
     AccordionModule.forRoot()
   ],
   declarations: [

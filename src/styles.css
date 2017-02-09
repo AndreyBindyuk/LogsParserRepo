@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
 input .ng-touched.ng-invalid {
   border: 1px solid red;
 }
@@ -23,7 +24,10 @@ input .ng-touched.ng-invalid {
   color: #2c3e50;
 }
 
-.accordion-header{
+.accordion-header {
   background-color: lightblue;
 }
 
+.token.tag {
+  color: blue;
+}

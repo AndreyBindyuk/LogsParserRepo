@@ -25,7 +25,8 @@
           {{logResult.fileName}}
           <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
         </div>
-        <handy-syntax-highlighter *ngFor="let message of logResult.messages" [language]="'markup'" [content]="message"></handy-syntax-highlighter>
+        <pre *ngFor="let message of logResult.messages" class="language-markup"><code class="language-markup" [innerHTML]="message"></code></pre>
+        <!--<handy-syntax-highlighter *ngFor="let message of logResult.messages" [language]="'markup'" [content]="message"></handy-syntax-highlighter>-->
       </accordion-group>
     </accordion>
   </div>

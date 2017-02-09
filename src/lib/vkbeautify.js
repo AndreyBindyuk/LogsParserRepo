@@ -77,7 +77,7 @@ function createShiftArr(step) {
 }
 
 function vkbeautify(){
-	this.step = '   '; // 4 spaces
+	this.step = '    '; // 4 spaces
 	this.shift = createShiftArr(this.step);
 };
 
