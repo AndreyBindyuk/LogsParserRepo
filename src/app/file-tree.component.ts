@@ -16,6 +16,7 @@ export class FileTreeComponent {
 
   onClick($event, item) {
     $event.stopPropagation();
+    window.scrollTo(0, 0);
     this.select.emit(item);
   }
 

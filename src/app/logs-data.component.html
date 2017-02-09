@@ -4,15 +4,16 @@
     <option *ngFor="let server of servers" value="{{server}}">{{server}}</option>
   </select>
   <accordion>
-    <file-tree [tree]="fileTree" (select)="selectLogFile($event)"></file-tree>
+    <file-tree [tree]="fileTree" (select)="selectPath($event)"></file-tree>
   </accordion>
 </div>
 <div *ngIf="currentPath" class="col-md-7">
   <p>Current log path: {{currentPath}}</p>
   <form #form="ngForm" role="search" (ngSubmit)="getLoggedMessagesList(form.value)">
     <div class="input-group">
-      <input id="flowId" ngModel name="flowId" #flowId="ngModel" type="text" class="form-control" placeholder="Enter flowId" required>
-      <span class="input-group-btn">
+      <input id="trackingId" ngModel name="trackingId" #trackingId="ngModel" type="text" class="form-control" placeholder="Enter message tracking id"
+        required autofocus>
+        <span class="input-group-btn">
         <button type="submit" class="btn btn-default">Find</button>
       </span>
     </div>

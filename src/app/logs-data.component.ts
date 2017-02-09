@@ -47,14 +47,17 @@ export class LogsDataComponent {
     }
   }
 
-  selectLogFile(file) {
-    this.currentPath = file.path;
+  selectPath(event) {
+    this.currentPath = event.path;
+    if (document.getElementById('trackingId')) {
+      document.getElementById('trackingId').focus();
+    }
   }
 
   getLoggedMessagesList(form) {
     this.logResultList = [];
     this.isLoading = true;
-    this.currentTrackingId = form.flowId;
+    this.currentTrackingId = form.trackingId;
     if (this.currentPath.includes('.')) {
       this._restService.getLogsFromFileByTrackingId(this.currentServers, this.currentPath, this.currentTrackingId)
         .subscribe(result => {
