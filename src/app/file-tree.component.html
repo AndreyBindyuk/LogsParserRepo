@@ -1,11 +1,11 @@
-<accordion-group #group *ngFor="let item of tree" [panelClass]="'panel panel-default'">
+<accordion-group #group *ngFor="let item of tree" [panelClass]="'panel'">
   <div accordion-heading>
-    {{item.name}}
-    <a *ngIf="_banks.includes(item.name)" (click)=onClick($event,item)>>></a>
+    <b>{{item.name}}</b>
+    <a class="clickable" *ngIf="_banks.includes(item.name)" (click)=onClick($event,item)>>></a>
     <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
   </div>
-  <ul *ngIf="item.children && item.children[0].name.includes('.')">
-    <li *ngFor="let child of item.children" (click)="onClick($event,child)"><a class="clickable">{{child.name}}</a></li>
+  <ul *ngIf="item.children && item.children[0].name.includes('.')" class="custom-list">
+    <li *ngFor="let child of item.children"><a class="clickable" (click)="onClick($event,child)">{{child.name}}</a></li>
   </ul>
   <accordion *ngIf="item.children && !item.children[0].name.includes('.')">
     <file-tree [tree]="item.children" (select)="onChildClick($event)"></file-tree>

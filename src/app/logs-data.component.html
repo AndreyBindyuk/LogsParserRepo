@@ -8,7 +8,7 @@
   </accordion>
 </div>
 <div *ngIf="currentPath" class="col-md-7">
-  <p>Current log path: {{currentPath}}</p>
+  <p><b>Current log path: {{currentPath}}</b></p>
   <form #form="ngForm" role="search" (ngSubmit)="getLoggedMessagesList(form.value)">
     <div class="input-group">
       <input id="trackingId" ngModel name="trackingId" #trackingId="ngModel" type="text" class="form-control" placeholder="Enter message tracking id"
@@ -21,7 +21,7 @@
   <spinner [visible]="isLoading"></spinner>
   <div *ngIf="currentTrackingId && logResultList" class="form-group">
     <accordion>
-      <accordion-group #group *ngFor="let logResult of logResultList">
+      <accordion-group #group *ngFor="let logResult of logResultList" [panelClass]="'panel'">
         <div accordion-heading>
           {{logResult.fileName}}
           <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
