@@ -21,7 +21,7 @@ export class Parser {
       children: {}
     };
     let parsedList = filesPath.map(path => {
-      return path.split('\\');
+      return path.split('/');
     });
     this.buildFileTree(parsedList, tree);
     this.convertItem(tree);
