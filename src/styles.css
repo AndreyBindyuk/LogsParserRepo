@@ -1,31 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~https://fonts.googleapis.com/icon?family=Material+Icons';
+@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';
+
+body {
+    font-family: Roboto, serif;
+}
+
+.primary-color {
+    color: #3F51B5 !important;
+}
+
+.accent-color {
+    color: #FF4081 !important;
+}
+
+.background-primary-color {
+    background-color: #3F51B5 !important;
+}
+
+.background-accent-color {
+    background-color: #FF4081 !important;
+}
+
+.white-text {
+    color: #FFF !important;
+}
+
+md-select {
+    display: initial !important;
+    font-size: 20px;
+    width: 100px;
+}
+
+.md-select-value{
+    top: 0!important;
+}
 
 .clickable {
-  cursor: pointer;
-  color: black;
+    cursor: pointer;
+    color: black;
 }
 
 .panel {
-  background: transparent;
-  border: 1px solid #358ccb;
-  color: black;
-  margin: 1px;
+    background: transparent;
+    border: 1px solid #358ccb;
+    color: black;
+    margin: 1px;
 }
 
 .panel-heading {
-  background: transparent;
+    background: transparent;
 }
 
-.panel-group .panel-heading+.panel-collapse>.list-group,
-.panel-group .panel-heading+.panel-collapse>.panel-body {
-  border-top: 1px solid #358ccb;
+.panel-group .panel-heading + .panel-collapse > .list-group,
+.panel-group .panel-heading + .panel-collapse > .panel-body {
+    border-top: 1px solid #358ccb;
 }
 
 .token.tag {
-  color: blue;
+    color: blue;
 }
 
 .custom-list {
-  color: #eee;
-  font-size: 12px;
+    color: #eee;
+    font-size: 12px;
 }
