@@ -1,36 +1,45 @@
 <div class="col-md-3">
-  <select class="form-control clickable" #u (change)="selectServer(u.value)">
-    <option value="">Select a server...</option>
-    <option *ngFor="let server of servers" value="{{server}}">{{server}}</option>
-  </select>
-  <accordion>
-    <file-tree [tree]="fileTree" (select)="selectPath($event)"></file-tree>
-  </accordion>
+    <md-select [placeholder]="'Select a server'" [disabled]="servers.length=='0'">
+        <md-option *ngFor="let server of servers" [value]="server" (onSelect)="selectServer(server)">
+            {{server}}
+        </md-option>
+    </md-select>
+    <!--<select class="form-control clickable" #u (change)="selectServer(u.value)">-->
+    <!--<option value="">Select a server...</option>-->
+    <!--<option *ngFor="let server of servers" value="{{server}}">{{server}}</option>-->
+    <!--</select>-->
+    <accordion>
+        <file-tree [tree]="fileTree" (select)="selectPath($event)"></file-tree>
+    </accordion>
 </div>
 <div *ngIf="currentPath" class="col-md-7">
-  <p><b>Current log path: {{currentPath}}</b></p>
-  <form #form="ngForm" role="search" (ngSubmit)="getLoggedMessagesList(form.value)">
-    <div class="input-group">
-      <input id="trackingId" ngModel name="trackingId" #trackingId="ngModel" type="text" class="form-control" placeholder="Enter message tracking id"
-        required autofocus>
-        <span class="input-group-btn">
+    <p><b>Current log path: {{currentPath}}</b></p>
+    <form #form="ngForm" role="search" (ngSubmit)="getLoggedMessagesList(form.value)">
+        <div class="input-group">
+            <input id="trackingId" ngModel name="trackingId" #trackingId="ngModel" type="text" class="form-control"
+                   placeholder="Enter message tracking id"
+                   required autofocus>
+            <span class="input-group-btn">
+                <!--<button md-raised-button class="background-primary-color white-text"><md-icon class="white-text">search</md-icon></button>-->
         <button type="submit" class="btn btn-default">Find</button>
       </span>
+        </div>
+    </form>
+    <spinner [visible]="isLoading"></spinner>
+    <div *ngIf="currentTrackingId && logResultList" class="form-group">
+        <accordion>
+            <accordion-group #group *ngFor="let logResult of logResultList" [panelClass]="'panel'">
+                <div accordion-heading>
+                    {{logResult.fileName}}
+                    <i class="pull-right float-xs-right glyphicon"
+                       [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+                </div>
+                <div *ngIf="logResult.messages.length==0">
+                    no log messages with current tracking id
+                </div>
+                <pre *ngFor="let message of logResult.messages" class="language-markup"><code class="language-markup"
+                                                                                              [innerHTML]="message"></code></pre>
+            </accordion-group>
+        </accordion>
     </div>
-  </form>
-  <spinner [visible]="isLoading"></spinner>
-  <div *ngIf="currentTrackingId && logResultList" class="form-group">
-    <accordion>
-      <accordion-group #group *ngFor="let logResult of logResultList" [panelClass]="'panel'">
-        <div accordion-heading>
-          {{logResult.fileName}}
-          <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
-        </div>
-        <div *ngIf="logResult.messages.length==0">
-          no log messages with current tracking id
-        </div>
-        <pre *ngFor="let message of logResult.messages" class="language-markup"><code class="language-markup" [innerHTML]="message"></code></pre>
-      </accordion-group>
-    </accordion>
-  </div>
 </div>
