@@ -1,24 +1,20 @@
 package controller;
 
-import entities.FileInfo;
-import entities.ServerInfo;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.SftpException;
+import exeption.SFTPURIExceplion;
 import org.springframework.web.bind.annotation.*;
 import services.FileService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
 public class FileController {
 
     private FileService fileService = new FileService();
-
-//    @CrossOrigin
-//    @RequestMapping(value = "/files", method = RequestMethod.POST, headers = "Accept=application/xml")
-//    public String getFIle(@RequestBody FileInfo fileInfo) throws IOException {
-//        return fileService.getFile(fileInfo);
-//    }
 
     @CrossOrigin
     @RequestMapping(value = "/directories", method = RequestMethod.GET,params = "serverName",headers = "Accept=application/json")
@@ -32,17 +28,9 @@ public class FileController {
         return fileService.getServerNames();
     }
 
-//    @CrossOrigin
-//    @RequestMapping(value = "/nieaiLogs", method = RequestMethod.GET,params = {"serverName","logPath","trackingId"},headers = "Accept=application/json")
-//    public List getNieaiResponseByTrackingId(@RequestParam(value = "serverName") String serverName,@RequestParam(value = "logPath") String logPath,@RequestParam(value = "trackingId") String trackingId) throws IOException {
-//        return fileService.getNieaiResponseByTrackingId(serverName, logPath, trackingId);
-//    }
-
-
-
     @CrossOrigin
-    @RequestMapping(value = "/nieaiLogs", method = RequestMethod.POST,headers = "Accept=application/json")
-    public List getNieaiResponseByTrackingId(@RequestBody FileInfo fileInfo) throws IOException {
-        return fileService.getNieaiResponseByTrackingId(fileInfo.getServerName(),fileInfo.getLogPath(), fileInfo.getTrackingId());
+    @RequestMapping(value = "/bankLogs", method = RequestMethod.GET,params = {"serverName","bankPath","trackingId"},headers = "Accept=application/json")
+    public Map<String,List> getResponseByProjectFolder(@RequestParam(value = "serverName") String serverName,@RequestParam(value = "bankPath") String bankPath,@RequestParam(value = "trackingId") String trackingId) throws IOException, SftpException, JSchException, SFTPURIExceplion {
+        return fileService.getResponseByProjectFolder(serverName, bankPath, trackingId);
     }
 }

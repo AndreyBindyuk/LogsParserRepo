@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public class SFTPConnector {
 
-    private final String URL_RATTERN = "sftp:\\/\\/.*\\:.*\\@.*";
+    private final String URL_RATTERN = "sftp:\\/\\/.*\\:.*\\#.*";
     private final String CURRENT_FOLDER = ".";
     private final String PARENT_FOLDER = "..";
     private final String FOLDER_DETERMITATOR = "/";
@@ -84,7 +84,7 @@ public class SFTPConnector {
     }
 
     private String getHost(String connectionURL){
-        return connectionURL.substring(connectionURL.lastIndexOf('@')+1, connectionURL.length());
+        return connectionURL.substring(connectionURL.lastIndexOf('#')+1, connectionURL.length());
     }
 
     private String getUser(String connectionURL){
@@ -92,7 +92,7 @@ public class SFTPConnector {
     }
 
     private String getPassword(String connectionURL){
-        return connectionURL.substring(connectionURL.lastIndexOf(':')+1, connectionURL.lastIndexOf('@'));
+        return connectionURL.substring(connectionURL.lastIndexOf(':')+1, connectionURL.lastIndexOf('#'));
     }
 
     private String getFilename(String path){
