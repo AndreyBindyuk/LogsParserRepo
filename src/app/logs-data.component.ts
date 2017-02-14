@@ -68,9 +68,9 @@ export class LogsDataComponent {
     } else {
       this._restService.getLogsForBankByTrackingId(this.currentServers, this.currentPath, this.currentTrackingId)
         .subscribe(result => {
+          console.log('2 Log Result List', result);
           this.logResultList = this.parseResult(result);
           this.isLoading = false;
-          console.log('2 Log Result List', this.logResultList);
         });
     }
   }

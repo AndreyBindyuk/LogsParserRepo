@@ -41,6 +41,10 @@ md-select {
     color: black;
 }
 
+.full-width{
+    width: 100%;
+}
+
 .panel {
     background: transparent;
     border: 1px solid #358ccb;
