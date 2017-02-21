@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class RestService {
-  private _url = 'http://epkzkarw0410:8883/';
+  private _url = 'http://10.119.5.148:8080/LogsParser/';
 
   constructor(private _http: Http) {
   }
@@ -21,18 +21,10 @@ export class RestService {
     return this._http.get(this._url + 'directories?serverName=' + serverIp).map(result => result.json());
   }
 
-  getLogsForBankByTrackingId(serverIp: String, bankPath: String, trackingId: String) {
+  getLogsByTrackingId(serverIp: String, bankPath: String, trackingId: String) {
     return this._http.get(this._url +
       'bankLogs?serverName=' + serverIp +
       '&bankPath=' + bankPath +
-      '&trackingId=' + trackingId)
-      .map(result => result.json());
-  }
-
-  getLogsFromFileByTrackingId(serverIp: String, filePath: String, trackingId: String) {
-    return this._http.get(this._url +
-      'bankComponentLogs?serverName=' + serverIp +
-      '&filePath=' + filePath +
       '&trackingId=' + trackingId)
       .map(result => result.json());
   }
