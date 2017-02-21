@@ -8,6 +8,7 @@ import { LogsDataComponent } from './logs-data.component';
 import { FileTreeComponent } from './file-tree.component';
 import { SpinnerComponent } from './spinner.component';
 import { RestService } from './rest.service';
+import { MockRestService } from './mock.rest.service';
 import { Parser } from './parser';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { Parser } from './parser';
   ],
   providers: [
     RestService,
+    MockRestService,
     Parser
   ],
   bootstrap: [AppComponent]
