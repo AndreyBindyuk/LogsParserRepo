@@ -32,7 +32,7 @@ export class Parser {
     pathList.forEach(parsedItem => {
       let path = '';
       parsedItem.reduce((parent, current, index) => {
-        (index !== parsedItem.length - 1) ? (path = path + (current) + '\\') : (path = path + (current));
+        (index !== parsedItem.length - 1) ? (path = path + (current) + '/') : (path = path + (current));
         ;
         parent.children[current] = parent.children[current] ||
           this.itemConstructor(path, current, index !== parsedItem.length - 1);
