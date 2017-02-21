@@ -1,8 +1,13 @@
 <div class="col-md-3">
-  <select class="form-control clickable" #u (change)="selectServer(u.value)">
+  <div class="input-group">
+    <span class="input-group-addon" id="spinner">
+      <spinner [visible]="servers.length==0" [size]="'1x'" class=""></spinner>
+    </span>
+    <select class="form-control clickable" #u (change)="selectServer(u.value)" [disabled]="servers.length==0" aria-describedby="spinner">
     <option value="">Select a server...</option>
     <option *ngFor="let server of servers" value="{{server}}">{{server}}</option>
   </select>
+  </div>
   <accordion>
     <file-tree [tree]="fileTree" (select)="selectPath($event)"></file-tree>
   </accordion>
@@ -13,7 +18,7 @@
     <div class="input-group">
       <input id="trackingId" ngModel name="trackingId" #trackingId="ngModel" type="text" class="form-control" placeholder="Enter message tracking id"
         required autofocus>
-        <span class="input-group-btn">
+      <span class="input-group-btn">
         <button type="submit" class="btn btn-default">Find</button>
       </span>
     </div>
