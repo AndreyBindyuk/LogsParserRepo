@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RestService } from './rest.service';
+import { MockRestService } from './mock.rest.service';
 import { Parser } from './parser';
 
 export class LogResult {
@@ -30,9 +30,12 @@ export class LogsDataComponent {
   messageType = 'All';
   logResultList: LogResult[] = [];
 
-  constructor(private _restService: RestService, private _parser: Parser) {
+  constructor(private _restService: MockRestService, private _parser: Parser) {
     this._restService.getAvailableServers()
-      .subscribe(result => this.servers = result);
+      .subscribe(result => {
+        console.log(result);
+        this.servers = result;
+      });
   }
 
   selectServer(serverIp: String) {
@@ -58,27 +61,18 @@ export class LogsDataComponent {
     this.logResultList = [];
     this.isLoading = true;
     this.currentTrackingId = form.trackingId;
-    if (this.currentPath.includes('.')) {
-      this._restService.getLogsFromFileByTrackingId(this.currentServers, this.currentPath, this.currentTrackingId)
-        .subscribe(result => {
-          this.logResultList = this.parseResult(result);
-          this.isLoading = false;
-          console.log('1 Log Result List', this.logResultList);
-        });
-    } else {
-      this._restService.getLogsForBankByTrackingId(this.currentServers, this.currentPath, this.currentTrackingId)
-        .subscribe(result => {
-          this.logResultList = this.parseResult(result);
-          this.isLoading = false;
-          console.log('2 Log Result List', this.logResultList);
-        });
-    }
+    this._restService.getLogsByTrackingId(this.currentServers, this.currentPath, this.currentTrackingId)
+      .subscribe(result => {
+        console.log(result);
+        this.logResultList = this.parseResult(result);
+        this.isLoading = false;
+      });
   }
 
   private parseResult(result) {
     let resultList = [];
     for (let filePath in result) {
-      let fileName = filePath.split('\\').pop();
+      let fileName = filePath.split('/').pop();
       console.log(result[filePath]);
       let messages = this._parser.prettyXml(result[filePath]);
       resultList.push(new LogResult(fileName, messages, this.messageType));
